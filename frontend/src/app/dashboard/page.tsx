@@ -9,17 +9,17 @@ import { DiagramDto, AnalyticsDto } from "../../types";
 import { Button } from "../../components/ui/Button";
 import { Input } from "../../components/ui/Input";
 import { Modal } from "../../components/ui/Modal";
-import { 
-  Network, 
-  Plus, 
-  Trash2, 
-  Layout, 
-  Calendar, 
-  Clock, 
-  BrainCircuit, 
-  LogOut, 
-  Sun, 
-  Moon, 
+import {
+  Network,
+  Plus,
+  Trash2,
+  Layout,
+  Calendar,
+  Clock,
+  BrainCircuit,
+  LogOut,
+  Sun,
+  Moon,
   Search,
   ExternalLink
 } from "lucide-react";
@@ -33,13 +33,13 @@ export default function DashboardPage() {
   const [diagrams, setDiagrams] = useState<DiagramDto[]>([]);
   const [analytics, setAnalytics] = useState<AnalyticsDto | null>(null);
   const [loading, setLoading] = useState(true);
-  
+
   // Modals & form fields
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [newDiagramName, setNewDiagramName] = useState("");
   const [newDiagramDesc, setNewDiagramDesc] = useState("");
   const [createLoading, setCreateLoading] = useState(false);
-  
+
   const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null);
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -196,7 +196,7 @@ export default function DashboardPage() {
 
       {/* Main Content Workspace */}
       <main className="max-w-7xl mx-auto px-6 mt-8">
-        
+
         {/* Metric Cards (Analytics Panel) */}
         <section className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
           <div className="border border-zinc-200/50 dark:border-zinc-800/50 bg-white/40 dark:bg-zinc-950/40 rounded-xl p-5 backdrop-blur-xs flex items-center gap-4">
