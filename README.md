@@ -25,6 +25,32 @@ Or build and run the packaged JAR:
 java -jar target/archflow_ai-0.0.1-SNAPSHOT.jar
 ```
 
+## Local environment variables
+
+Set the following environment variables before running locally:
+
+PowerShell:
+
+```powershell
+$env:DB_PASSWORD = 'your-db-password'
+$env:GEMINI_API_KEY = 'your-gemini-key'
+$env:GROQ_API_KEY = 'your-groq-key'
+$env:JWT_SECRET = 'your-jwt-secret'
+./mvnw.cmd spring-boot:run
+```
+
+Command prompt (cmd.exe):
+
+```cmd
+set DB_PASSWORD=your-db-password
+set GEMINI_API_KEY=your-gemini-key
+set GROQ_API_KEY=your-groq-key
+set JWT_SECRET=your-jwt-secret
+./mvnw.cmd spring-boot:run
+```
+
+If you want a local `.env` file, do not commit it. Copy `src/main/resources/application.properties.example` to a new `.env` file and fill in your real secrets.
+
 ## API Base URL
 
 Use this URL in the frontend during local development:

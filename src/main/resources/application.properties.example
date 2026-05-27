@@ -1,29 +1,24 @@
-# Server Configuration
+# Example local configuration for Archflow AI backend
+# Do not commit secret values into Git.
+
 server.port=8080
 server.servlet.context-path=/api
 
-# Database Configuration (PostgreSQL Neon Tech)
 spring.datasource.url=jdbc:postgresql://ep-wandering-firefly-apzletbb-pooler.c-7.us-east-1.aws.neon.tech/neondb?sslmode=require
 spring.datasource.username=neondb_owner
-spring.datasource.password=${DB_PASSWORD:}
+spring.datasource.password=${DB_PASSWORD}
 spring.datasource.driver-class-name=org.postgresql.Driver
 
-# JPA / Hibernate Settings
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=false
 spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
 
-# WebSocket settings
 spring.servlet.multipart.max-file-size=10MB
 spring.servlet.multipart.max-request-size=10MB
 
-# JWT Configuration
-# Base64-encoded standard 256-bit key for HMAC-SHA
-archflow.jwt.secret=${JWT_SECRET:}
+archflow.jwt.secret=${JWT_SECRET}
 archflow.jwt.expiration-ms=86400000
 
-# AI Provider Configuration
-# DO NOT commit provider API keys. Set these via environment variables in deployment.
-archflow.ai.gemini.api-key=${GEMINI_API_KEY:}
-archflow.ai.groq.api-key=${GROQ_API_KEY:}
+archflow.ai.gemini.api-key=${GEMINI_API_KEY}
+archflow.ai.groq.api-key=${GROQ_API_KEY}
 archflow.ai.default-provider=${DEFAULT_AI_PROVIDER:gemini}
