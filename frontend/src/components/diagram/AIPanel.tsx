@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDiagramStore, graphJsonToReactFlow, reactFlowToGraphJson } from "../../store/diagramStore";
 import { aiService } from "../../services/api";
+import { useAutoLayout } from "../../hooks/useAutoLayout";
 import { Select } from "../ui/Select";
 import { Button } from "../ui/Button";
 import { Sparkles, ArrowRight, BrainCircuit, Wand2, Compass, AlertCircle, X } from "lucide-react";
@@ -30,6 +31,8 @@ export default function AIPanel() {
     setEdges,
     pushToHistory,
   } = useDiagramStore();
+
+  const { runLayout } = useAutoLayout();
 
   const [prompt, setPrompt] = useState("");
   const [error, setError] = useState("");
@@ -69,9 +72,7 @@ export default function AIPanel() {
         throw new Error("AI returned an empty diagram. Please try a different prompt.");
       }
 
-      setNodes(newNodes);
-      setEdges(newEdges);
-      pushToHistory(newNodes, newEdges);
+      runLayout(newNodes, newEdges, true);
       setPrompt("");
     } catch (e: any) {
       console.error(e);
@@ -104,9 +105,7 @@ export default function AIPanel() {
         throw new Error("AI returned an empty diagram. Please try a different prompt.");
       }
 
-      setNodes(newNodes);
-      setEdges(newEdges);
-      pushToHistory(newNodes, newEdges);
+      runLayout(newNodes, newEdges, true);
       setPrompt("");
     } catch (e: any) {
       console.error(e);

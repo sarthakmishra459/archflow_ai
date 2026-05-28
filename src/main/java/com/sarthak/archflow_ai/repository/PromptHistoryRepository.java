@@ -14,6 +14,8 @@ public interface PromptHistoryRepository extends JpaRepository<PromptHistory, UU
     
     List<PromptHistory> findByDiagramIdOrderByCreatedAtDesc(UUID diagramId);
 
+    void deleteByDiagramId(UUID diagramId);
+
     @Query("SELECT p.provider as provider, COUNT(p) as count FROM PromptHistory p GROUP BY p.provider")
     List<Map<String, Object>> getPromptCountByProvider();
 

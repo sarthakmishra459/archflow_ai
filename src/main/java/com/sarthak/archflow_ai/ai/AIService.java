@@ -57,12 +57,8 @@ public class AIService {
                   "nodes": [
                     {
                       "id": "unique-node-id",
-                      "type": "client" | "gateway" | "service" | "database" | "queue",
-                      "label": "Display Name",
-                      "position": {
-                        "x": 100,
-                        "y": 100
-                      }
+                      "type": "client" | "gateway" | "service" | "database" | "queue" | "cache",
+                      "label": "Display Name"
                     }
                   ],
                   "edges": [
@@ -75,10 +71,9 @@ public class AIService {
                   ]
                 }
                 
-                Guidelines for positioning:
-                1. Standard left-to-right flow is preferred. Start client at x=50, gateways at x=250, services at x=450, and databases/caches at x=650 or 750.
-                2. Vertically separate concurrent services (e.g. Order Service at y=100, Payment Service at y=250).
-                3. Ensure no node positions overlap. Spacing should be at least 150-200 pixels apart.
+                Guidelines:
+                1. Include all necessary architectural layers (clients, gateways, services, databases, caching, message queues) depending on the requirement.
+                2. Do not generate position coordinates. Node layout and hierarchy are handled automatically by the system.
                 """;
 
         long startTime = System.currentTimeMillis();
@@ -113,10 +108,10 @@ public class AIService {
                 You must return a valid JSON object containing the updated nodes and edges. Do NOT wrap the response in markdown blocks.
                 
                 Crucial Editing Constraints:
-                1. Retain the IDs and general position coordinates of unmodified nodes so that the layout does not shift disorientingly.
+                1. Retain the IDs of unmodified nodes.
                 2. Insert, update, or remove nodes/edges according to the user's instructions.
-                3. For new nodes, assign reasonable X and Y coordinates that prevent overlap and integrate seamlessly into the current layout flow.
-                4. Maintain standard node types: "client", "gateway", "service", "database", "queue".
+                3. Maintain standard node types: "client", "gateway", "service", "database", "queue", "cache".
+                4. Do not generate or modify node coordinates or positions. Position layout is automatically computed.
                 """, currentGraphJson);
 
         long startTime = System.currentTimeMillis();

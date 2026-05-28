@@ -6,6 +6,7 @@ import com.sarthak.archflow_ai.entity.User;
 import com.sarthak.archflow_ai.entity.VersionHistory;
 import com.sarthak.archflow_ai.repository.DiagramRepository;
 import com.sarthak.archflow_ai.repository.VersionHistoryRepository;
+import com.sarthak.archflow_ai.repository.PromptHistoryRepository;
 import com.sarthak.archflow_ai.service.DiagramService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,7 @@ public class DiagramServiceImpl implements DiagramService {
 
     private final DiagramRepository diagramRepository;
     private final VersionHistoryRepository versionHistoryRepository;
+    private final PromptHistoryRepository promptHistoryRepository;
 
     @Override
     @Transactional
@@ -83,6 +85,7 @@ public class DiagramServiceImpl implements DiagramService {
     public void deleteDiagram(UUID id, User user) {
         Diagram diagram = getDiagramEntity(id, user);
         versionHistoryRepository.deleteByDiagram_Id(diagram.getId());
+        promptHistoryRepository.deleteByDiagramId(diagram.getId());
         diagramRepository.delete(diagram);
     }
 

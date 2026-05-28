@@ -11,6 +11,7 @@ import NodeToolbar from "../../../components/diagram/NodeToolbar";
 import AIPanel from "../../../components/diagram/AIPanel";
 import PropertiesSidebar from "../../../components/diagram/PropertiesSidebar";
 import VersionSidebar from "../../../components/diagram/VersionSidebar";
+import Toolbar from "../../../components/diagram/Toolbar";
 
 export default function DiagramEditorPage() {
   const params = useParams();
@@ -90,6 +91,9 @@ export default function DiagramEditorPage() {
 
             {/* AI Assistant Panel (Right) */}
             <AIPanel />
+
+            {/* Custom Floating Toolbar (Center-Bottom) */}
+            <Toolbar />
           </div>
 
           {/* Collapsible Inspection Panel (Right Side-Rail) */}

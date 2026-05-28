@@ -39,6 +39,10 @@ public class Diagram {
     @OneToMany(mappedBy = "diagram", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<VersionHistory> versionHistories = new ArrayList<>();
 
+    @Builder.Default
+    @OneToMany(mappedBy = "diagram", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PromptHistory> promptHistories = new ArrayList<>();
+
     @Column(name = "is_public", nullable = false)
     private boolean isPublic;
 
