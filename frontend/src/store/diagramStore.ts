@@ -261,7 +261,7 @@ export const useDiagramStore = create<DiagramState>((set, get) => ({
   },
 
   loadDiagram: async (id) => {
-    set({ isLoading: true });
+    set({ isLoading: true, nodes: [], edges: [], history: [], historyIndex: -1 });
     try {
       const data = await diagramService.getDiagram(id);
       const { nodes, edges } = graphJsonToReactFlow(data.graphJson);

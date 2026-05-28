@@ -1,0 +1,13 @@
+target
+.mvn
+.git
+frontend/node_modules
+node_modules
+**/node_modules
+.idea
+*.log
+.gitignore
+README.md
+.env
+frontend/.next
+frontend/.vercel

@@ -119,7 +119,7 @@ export default function AIPanel() {
   };
 
   const providersOptions = [
-    { value: "gemini", label: "Google Gemini 1.5 Flash" },
+    { value: "gemini", label: "Google Gemini 2.5 Flash" },
     { value: "groq", label: "Groq LLaMA 3" },
   ];
 

@@ -41,7 +41,7 @@ public class GroqProvider implements AIProvider {
         }
 
         try {
-            String url = "https://api.groq.com/openapi/v1/chat/completions";
+            String url = "https://api.groq.com/openai/v1/chat/completions";
 
             // Build payload
             ObjectNode rootNode = objectMapper.createObjectNode();

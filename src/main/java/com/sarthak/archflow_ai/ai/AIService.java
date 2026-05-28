@@ -38,6 +38,12 @@ public class AIService {
     }
 
     public String generateDiagram(String userPrompt, String providerName, Diagram diagram) {
+        if (shouldReturnEmptyGraph(userPrompt)) {
+            String emptyGraph = emptyGraphJson();
+            savePromptHistory(userPrompt, emptyGraph, getActiveProvider(providerName).toUpperCase(), 0, diagram);
+            return emptyGraph;
+        }
+
         String activeProvider = getActiveProvider(providerName);
         AIProvider provider = providers.get(activeProvider);
 
@@ -88,6 +94,12 @@ public class AIService {
     }
 
     public String editDiagram(String editInstruction, String currentGraphJson, String providerName, Diagram diagram) {
+        if (shouldReturnEmptyGraph(editInstruction)) {
+            String emptyGraph = emptyGraphJson();
+            savePromptHistory(editInstruction, emptyGraph, getActiveProvider(providerName).toUpperCase(), 0, diagram);
+            return emptyGraph;
+        }
+
         String activeProvider = getActiveProvider(providerName);
         AIProvider provider = providers.get(activeProvider);
 
@@ -117,6 +129,25 @@ public class AIService {
             long latency = System.currentTimeMillis() - startTime;
             savePromptHistory(editInstruction, resultJson, activeProvider.toUpperCase(), latency, diagram);
         }
+    }
+
+    private boolean shouldReturnEmptyGraph(String prompt) {
+        if (prompt == null) {
+            return false;
+        }
+        String normalized = prompt.toLowerCase();
+        return normalized.contains("remove existing nodes")
+                || normalized.contains("remove nodes")
+                || normalized.contains("empty nodes")
+                || normalized.contains("clear nodes")
+                || normalized.contains("give empty nodes")
+                || normalized.contains("delete all nodes")
+                || normalized.contains("clear the canvas")
+                || normalized.contains("remove all nodes");
+    }
+
+    private String emptyGraphJson() {
+        return "{\"nodes\": [], \"edges\": []}";
     }
 
     private String getActiveProvider(String requestedProvider) {

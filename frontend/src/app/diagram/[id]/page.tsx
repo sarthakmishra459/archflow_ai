@@ -35,9 +35,11 @@ export default function DiagramEditorPage() {
 
   // Load diagram elements
   useEffect(() => {
-    if (diagramId) {
-      loadDiagram(diagramId);
-    }
+    if (!diagramId) return;
+
+    resetStore();
+    loadDiagram(diagramId);
+
     return () => {
       resetStore();
     };
