@@ -207,7 +207,7 @@ export default function DashboardPage() {
       {/* Main Content Workspace */}
       <main className="max-w-7xl mx-auto px-6 mt-8">
         {/* Metric Cards (Analytics Panel) */}
-        <section className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+        <section className="flex justify-between mb-10">
           <div className="border border-zinc-200/50 dark:border-zinc-800/50 bg-white/40 dark:bg-zinc-950/40 rounded-xl p-5 backdrop-blur-xs flex items-center gap-4">
             <div className="p-3 bg-indigo-500/10 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 rounded-lg">
               <BrainCircuit className="w-6 h-6" />
@@ -216,17 +216,13 @@ export default function DashboardPage() {
               <p className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">
                 AI Provider Breakdown
               </p>
-              <h3 className="text-xl font-bold mt-0.5 flex flex-wrap gap-x-3 gap-y-1">
+              <h3 className="text-md flex flex-col font-bold mt-0.5  flex-wrap gap-x-3 gap-y-1">
                 {analytics?.providerCounts &&
                 analytics.providerCounts.length > 0
                   ? analytics.providerCounts.map((item, index) => (
                       <span key={index} className="whitespace-nowrap">
                         {item.provider}: {item.count}
-                        {index < analytics.providerCounts.length - 1 && (
-                          <span className="ml-3 text-zinc-300 dark:text-zinc-700">
-                            |
-                          </span>
-                        )}
+                        {index < analytics.providerCounts.length - 1}
                       </span>
                     ))
                   : "0"}
@@ -242,17 +238,13 @@ export default function DashboardPage() {
               <p className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">
                 Average Latency
               </p>
-              <h3 className="text-2xl font-bold mt-0.5">
+              <h3 className="text-md flex flex-col font-bold mt-0.5">
                 {analytics?.providerLatencies &&
                 analytics.providerLatencies.length > 0
                   ? analytics.providerLatencies.map((item, index) => (
                       <span key={index} className="whitespace-nowrap">
                         {item.provider}: {item.avgLatency} ms
-                        {index < analytics.providerLatencies.length - 1 && (
-                          <span className="ml-3 text-zinc-300 dark:text-zinc-700">
-                            |
-                          </span>
-                        )}
+                        {index < analytics.providerLatencies.length - 1}
                       </span>
                     ))
                   : "0"}
