@@ -74,10 +74,11 @@ export default function AIPanel() {
 
       runLayout(newNodes, newEdges, true);
       setPrompt("");
-    } catch (e: any) {
-      console.error(e);
+    } catch (err: unknown) {
+      console.error(err);
+      const apiError = err as { response?: { data?: string } };
       setError(
-        e.response?.data || e.message || "Failed to generate diagram. Check API connection or provider key."
+        apiError.response?.data || "Failed to generate diagram. Check API connection or provider key."
       );
     } finally {
       setAiLoading(false);
@@ -107,10 +108,11 @@ export default function AIPanel() {
 
       runLayout(newNodes, newEdges, true);
       setPrompt("");
-    } catch (e: any) {
-      console.error(e);
+    } catch (err: unknown) {
+      console.error(err);
+      const apiError = err as { response?: { data?: string } };
       setError(
-        e.response?.data || e.message || "Failed to edit diagram. Check API connection or provider key."
+        apiError.response?.data || "Failed to edit diagram. Check API connection or provider key"
       );
     } finally {
       setAiLoading(false);

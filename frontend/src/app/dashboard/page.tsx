@@ -21,7 +21,7 @@ import {
   Sun,
   Moon,
   Search,
-  ExternalLink
+  ExternalLink,
 } from "lucide-react";
 
 export default function DashboardPage() {
@@ -72,9 +72,13 @@ export default function DashboardPage() {
     }
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+ useEffect(() => {
+  // Wrap the async call inside an immediately invoked function expression (IIFE)
+  (async () => {
+    await fetchData();
+  })();
+}, []);
+
 
   const handleCreateDiagram = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -118,7 +122,7 @@ export default function DashboardPage() {
   const filteredDiagrams = diagrams.filter(
     (d) =>
       d.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      d.description.toLowerCase().includes(searchTerm.toLowerCase())
+      d.description.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   const formatDate = (dateString?: string) => {
@@ -157,7 +161,9 @@ export default function DashboardPage() {
             <div className="p-1.5 bg-indigo-600 rounded-lg text-white">
               <Network className="w-5 h-5" />
             </div>
-            <span>ArchFlow <span className="text-indigo-500 font-medium">AI</span></span>
+            <span>
+              ArchFlow <span className="text-indigo-500 font-medium">AI</span>
+            </span>
           </div>
 
           <div className="flex items-center gap-4">
@@ -166,7 +172,11 @@ export default function DashboardPage() {
               onClick={toggleTheme}
               className="p-2 rounded-lg text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors"
             >
-              {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+              {isDark ? (
+                <Sun className="w-4 h-4" />
+              ) : (
+                <Moon className="w-4 h-4" />
+              )}
             </button>
 
             {/* User Profile */}
@@ -196,7 +206,6 @@ export default function DashboardPage() {
 
       {/* Main Content Workspace */}
       <main className="max-w-7xl mx-auto px-6 mt-8">
-
         {/* Metric Cards (Analytics Panel) */}
         <section className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
           <div className="border border-zinc-200/50 dark:border-zinc-800/50 bg-white/40 dark:bg-zinc-950/40 rounded-xl p-5 backdrop-blur-xs flex items-center gap-4">
@@ -205,10 +214,22 @@ export default function DashboardPage() {
             </div>
             <div>
               <p className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">
-                Total AI Prompts
+                AI Provider Breakdown
               </p>
-              <h3 className="text-2xl font-bold mt-0.5">
-                {analytics?.totalPrompts || 0}
+              <h3 className="text-xl font-bold mt-0.5 flex flex-wrap gap-x-3 gap-y-1">
+                {analytics?.providerCounts &&
+                analytics.providerCounts.length > 0
+                  ? analytics.providerCounts.map((item, index) => (
+                      <span key={index} className="whitespace-nowrap">
+                        {item.provider}: {item.count}
+                        {index < analytics.providerCounts.length - 1 && (
+                          <span className="ml-3 text-zinc-300 dark:text-zinc-700">
+                            |
+                          </span>
+                        )}
+                      </span>
+                    ))
+                  : "0"}
               </h3>
             </div>
           </div>
@@ -222,9 +243,19 @@ export default function DashboardPage() {
                 Average Latency
               </p>
               <h3 className="text-2xl font-bold mt-0.5">
-                {analytics?.averageLatencyMs
-                  ? `${(analytics.averageLatencyMs / 1000).toFixed(2)}s`
-                  : "0s"}
+                {analytics?.providerLatencies &&
+                analytics.providerLatencies.length > 0
+                  ? analytics.providerLatencies.map((item, index) => (
+                      <span key={index} className="whitespace-nowrap">
+                        {item.provider}: {item.avgLatency} ms
+                        {index < analytics.providerLatencies.length - 1 && (
+                          <span className="ml-3 text-zinc-300 dark:text-zinc-700">
+                            |
+                          </span>
+                        )}
+                      </span>
+                    ))
+                  : "0"}
               </h3>
             </div>
           </div>
@@ -245,7 +276,9 @@ export default function DashboardPage() {
         {/* Dashboard Title & Actions */}
         <section className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
           <div>
-            <h1 className="text-2xl font-extrabold tracking-tight">Your Diagrams</h1>
+            <h1 className="text-2xl font-extrabold tracking-tight">
+              Your Diagrams
+            </h1>
             <p className="text-sm text-zinc-400 mt-1">
               Create, view, and manage your cloud architecture maps
             </p>
@@ -263,7 +296,10 @@ export default function DashboardPage() {
               />
             </div>
 
-            <Button onClick={() => setIsCreateOpen(true)} className="gap-1.5 text-sm">
+            <Button
+              onClick={() => setIsCreateOpen(true)}
+              className="gap-1.5 text-sm"
+            >
               <Plus className="w-4 h-4" /> New Diagram
             </Button>
           </div>
@@ -285,7 +321,10 @@ export default function DashboardPage() {
                   : "Get started by creating your first diagram or using the AI Assistant inside the canvas."}
               </p>
               {!searchTerm && (
-                <Button onClick={() => setIsCreateOpen(true)} className="mt-5 text-sm">
+                <Button
+                  onClick={() => setIsCreateOpen(true)}
+                  className="mt-5 text-sm"
+                >
                   Create Diagram
                 </Button>
               )}
@@ -393,7 +432,8 @@ export default function DashboardPage() {
       >
         <div className="flex flex-col gap-4">
           <p className="text-sm text-zinc-400">
-            Are you sure you want to delete this diagram? This action is permanent and cannot be undone.
+            Are you sure you want to delete this diagram? This action is
+            permanent and cannot be undone.
           </p>
 
           <div className="flex justify-end gap-3 mt-2">

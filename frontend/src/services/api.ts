@@ -34,11 +34,19 @@ api.interceptors.request.use(
 );
 
 // Response interceptor to handle token expiration/401
+// Response interceptor to handle token expiration/401/403
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response && error.response.status === 401) {
-      if (typeof window !== "undefined") {
+    if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+      // Get the URL that triggered the error
+      const requestUrl = error.config?.url || "";
+
+      // Skip the redirect if the user is already trying to log in or register
+      const isAuthRequest = requestUrl.includes("/auth/login") || requestUrl.includes("/auth/register");
+
+      if (typeof window !== "undefined" && !isAuthRequest) {
+        // Only log out and redirect if they are trying to access protected data
         useAuthStore.getState().logout();
         window.location.href = "/login";
       }
@@ -46,6 +54,7 @@ api.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
 
 export const authService = {
   login: async (loginData: any): Promise<AuthResponse> => {

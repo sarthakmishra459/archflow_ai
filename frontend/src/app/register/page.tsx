@@ -43,10 +43,11 @@ export default function RegisterPage() {
       const response = await authService.register({ username, email, password });
       login(response.token, response.username, response.email, response.userId);
       router.push("/dashboard");
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error(err);
+      const apiError = err as { response?: { data?: string } };
       setError(
-        err.response?.data || "Registration failed. Username or email may already be taken."
+        apiError.response?.data || "Registration failed. Username or email may already be taken."
       );
     } finally {
       setLoading(false);

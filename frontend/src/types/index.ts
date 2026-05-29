@@ -37,7 +37,8 @@ export interface EditDiagramRequest {
 
 export interface AnalyticsDto {
   totalPrompts: number;
-  providerCounts: Record<string, number>;
+  providerCounts: { count: number; provider: string }[];
+  providerLatencies: { avgLatency: number; provider: string }[];
   averageLatencyMs: number;
   totalTokensUsed: number;
   promptHistory: {

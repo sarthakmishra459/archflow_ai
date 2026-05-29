@@ -42,10 +42,11 @@ export default function LoginPage() {
       const response = await authService.login({ username, password });
       login(response.token, response.username, response.email, response.userId);
       router.push("/dashboard");
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error(err);
+      const apiError = err as { response?: { data?: string } };
       setError(
-        err.response?.data || "Invalid username or password. Please try again."
+        apiError.response?.data || "Invalid username or password. Please try again."
       );
     } finally {
       setLoading(false);

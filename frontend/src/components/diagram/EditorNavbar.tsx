@@ -2,20 +2,25 @@ import React, { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useDiagramStore } from "../../store/diagramStore";
 import { useTheme } from "../../hooks/useTheme";
-import { exportToJson, exportToPng, exportToSvg, importFromJson } from "../../utils/exportUtils";
+import {
+  exportToJson,
+  exportToPng,
+  exportToSvg,
+  importFromJson,
+} from "../../utils/exportUtils";
 import { Button } from "../ui/Button";
-import { 
-  ArrowLeft, 
-  Save, 
-  Camera, 
-  Download, 
-  Upload, 
-  Sun, 
-  Moon, 
-  Check, 
-  Loader2, 
+import {
+  ArrowLeft,
+  Save,
+  Camera,
+  Download,
+  Upload,
+  Sun,
+  Moon,
+  Check,
+  Loader2,
   Edit3,
-  History
+  History,
 } from "lucide-react";
 
 interface EditorNavbarProps {
@@ -23,10 +28,13 @@ interface EditorNavbarProps {
   showVersions: boolean;
 }
 
-export default function EditorNavbar({ onToggleVersions, showVersions }: EditorNavbarProps) {
+export default function EditorNavbar({
+  onToggleVersions,
+  showVersions,
+}: EditorNavbarProps) {
   const router = useRouter();
   const { theme, toggleTheme, isDark } = useTheme();
-  
+
   const {
     name,
     diagramId,
@@ -40,7 +48,7 @@ export default function EditorNavbar({ onToggleVersions, showVersions }: EditorN
     createSnapshot,
     setNodes,
     setEdges,
-    pushToHistory
+    pushToHistory,
   } = useDiagramStore();
 
   const [isEditingName, setIsEditingName] = useState(false);
@@ -65,8 +73,11 @@ export default function EditorNavbar({ onToggleVersions, showVersions }: EditorN
       setNodes(data.nodes);
       setEdges(data.edges);
       pushToHistory(data.nodes, data.edges);
-    } catch (error: any) {
-      alert(error.message || "Failed to import JSON file.");
+    } catch (error: unknown) {
+      // Check if error is an object containing a message string
+      const errorMessage =
+        error instanceof Error ? error.message : "Failed to import JSON file.";
+      alert(errorMessage);
     } finally {
       if (fileInputRef.current) fileInputRef.current.value = "";
     }
@@ -132,7 +143,9 @@ export default function EditorNavbar({ onToggleVersions, showVersions }: EditorN
                 <span>Saving...</span>
               </>
             ) : (
-              <span className="text-zinc-300 dark:text-zinc-700">All saved</span>
+              <span className="text-zinc-300 dark:text-zinc-700">
+                All saved
+              </span>
             )}
           </div>
         </div>
@@ -270,7 +283,11 @@ export default function EditorNavbar({ onToggleVersions, showVersions }: EditorN
           onClick={toggleTheme}
           className="p-1.5 rounded-lg text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-900 transition-colors"
         >
-          {isDark ? <Sun className="w-4.5 h-4.5" /> : <Moon className="w-4.5 h-4.5" />}
+          {isDark ? (
+            <Sun className="w-4.5 h-4.5" />
+          ) : (
+            <Moon className="w-4.5 h-4.5" />
+          )}
         </button>
       </div>
     </nav>
